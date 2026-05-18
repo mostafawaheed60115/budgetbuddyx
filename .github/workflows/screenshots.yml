@@ -1,4 +1,4 @@
-name: Flutter Web Screenshots
+name: Flutter Full App Screenshots
 
 on:
   workflow_dispatch:
@@ -83,8 +83,11 @@ jobs:
           })();
           JS
 
+      - name: List generated screenshots
+        run: ls -la screenshots
+
       - name: Upload screenshots
         uses: actions/upload-artifact@v4
         with:
-          name: flutter-screenshots
+          name: flutter-full-app-screenshots
           path: screenshots
