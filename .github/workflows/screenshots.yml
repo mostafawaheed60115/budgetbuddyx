@@ -1,0 +1,59 @@
+name: Flutter Web Screenshots
+
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Build Flutter web
+        run: flutter build web --release
+
+      - name: Install screenshot tools
+        run: |
+          npm init -y
+          npm install -D http-server playwright
+          npx playwright install chromium
+
+      - name: Serve app and take screenshots
+        run: |
+          npx http-server build/web -p 8080 &
+          sleep 5
+          node - <<'JS'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+
+          (async () => {
+            fs.mkdirSync('screenshots', { recursive: true });
+
+            const browser = await chromium.launch();
+            const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+
+            await page.goto('http://127.0.0.1:8080', { waitUntil: 'networkidle' });
+            await page.screenshot({ path: 'screenshots/mobile-home.png', fullPage: true });
+
+            await page.setViewportSize({ width: 1440, height: 900 });
+            await page.screenshot({ path: 'screenshots/desktop-home.png', fullPage: true });
+
+            await browser.close();
+          })();
+          JS
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-screenshots
+          path: screenshots

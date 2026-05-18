@@ -1,0 +1,26 @@
+name: budget_buddy
+description: "BudgetBuddy - Personal Finance Manager"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.2
+  http: ^1.2.2
+  shared_preferences: ^2.3.4
+  intl: ^0.19.0
+  flutter_slidable: ^3.1.1
+  fl_chart: ^0.70.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
