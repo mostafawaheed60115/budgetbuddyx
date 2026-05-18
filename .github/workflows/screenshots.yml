@@ -40,13 +40,44 @@ jobs:
             fs.mkdirSync('screenshots', { recursive: true });
 
             const browser = await chromium.launch();
-            const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+            const page = await browser.newPage();
 
-            await page.goto('http://127.0.0.1:8080', { waitUntil: 'networkidle' });
-            await page.screenshot({ path: 'screenshots/mobile-home.png', fullPage: true });
+            async function captureRoute(name, route, width = 390, height = 844) {
+              await page.setViewportSize({ width, height });
+              await page.goto(`http://127.0.0.1:8080/#${route}`, { waitUntil: 'domcontentloaded' });
+              await page.waitForTimeout(3500);
+              await page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
+            }
 
-            await page.setViewportSize({ width: 1440, height: 900 });
-            await page.screenshot({ path: 'screenshots/desktop-home.png', fullPage: true });
+            async function captureHomeTab(name, tabIndex) {
+              await page.setViewportSize({ width: 390, height: 844 });
+              await page.goto('http://127.0.0.1:8080/#/home', { waitUntil: 'domcontentloaded' });
+              await page.waitForTimeout(3500);
+
+              if (tabIndex > 0) {
+                const tabWidth = 390 / 5;
+                await page.mouse.click((tabIndex + 0.5) * tabWidth, 810);
+                await page.waitForTimeout(1500);
+              }
+
+              await page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
+            }
+
+            await captureRoute('01-login-mobile', '/login');
+            await captureRoute('02-signup-mobile', '/signup');
+            await captureHomeTab('03-dashboard-mobile', 0);
+            await captureHomeTab('04-income-mobile', 1);
+            await captureHomeTab('05-expenses-mobile', 2);
+            await captureHomeTab('06-budgets-mobile', 3);
+            await captureHomeTab('07-savings-mobile', 4);
+            await captureRoute('08-notifications-mobile', '/notifications');
+            await captureRoute('09-add-income-mobile', '/income/form');
+            await captureRoute('10-add-expense-mobile', '/expense/form');
+            await captureRoute('11-add-budget-mobile', '/budget/form');
+            await captureRoute('12-add-savings-mobile', '/savings/form');
+
+            await captureRoute('13-dashboard-desktop', '/home', 1440, 900);
+            await captureRoute('14-login-desktop', '/login', 1440, 900);
 
             await browser.close();
           })();
