@@ -26,7 +26,7 @@ class _SavingsListScreenState extends State<SavingsListScreen> {
     final currencyFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.savings)),
+      appBar: AppBar(title: Text(AppStrings.savings)),
       body: Consumer<SavingsProvider>(
         builder: (context, provider, _) {
           if (provider.isLoading && provider.savings.isEmpty) {
@@ -59,8 +59,8 @@ class _SavingsListScreenState extends State<SavingsListScreen> {
                               title: const Text('Delete Savings Goal'),
                               content: const Text('Are you sure?'),
                               actions: [
-                                TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text(AppStrings.cancel)),
-                                TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text(AppStrings.delete, style: TextStyle(color: AppColors.danger))),
+                                TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppStrings.cancel)),
+                                TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(AppStrings.delete, style: const TextStyle(color: AppColors.danger))),
                               ],
                             ),
                           );

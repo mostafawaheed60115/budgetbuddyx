@@ -93,7 +93,7 @@ class _BudgetFormScreenState extends State<BudgetFormScreen> {
             children: [
               DropdownButtonFormField<String>(
                 initialValue: _selectedCategory,
-                decoration: const InputDecoration(labelText: AppStrings.category),
+                decoration: InputDecoration(labelText: AppStrings.category),
                 items: _categories
                     .map((c) => DropdownMenuItem(value: c, child: Text(c)))
                     .toList(),
@@ -112,7 +112,7 @@ class _BudgetFormScreenState extends State<BudgetFormScreen> {
               ),
               DropdownButtonFormField<int>(
                 initialValue: _selectedMonth,
-                decoration: const InputDecoration(labelText: AppStrings.month),
+                decoration: InputDecoration(labelText: AppStrings.month),
                 items: List.generate(12, (i) => i + 1)
                     .map((m) => DropdownMenuItem(value: m, child: Text('$m')))
                     .toList(),
@@ -121,7 +121,7 @@ class _BudgetFormScreenState extends State<BudgetFormScreen> {
               const SizedBox(height: 16),
               DropdownButtonFormField<int>(
                 initialValue: _selectedYear,
-                decoration: const InputDecoration(labelText: AppStrings.year),
+                decoration: InputDecoration(labelText: AppStrings.year),
                 items: List.generate(6, (i) => DateTime.now().year - 1 + i)
                     .map((y) => DropdownMenuItem(value: y, child: Text('$y')))
                     .toList(),

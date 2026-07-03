@@ -46,8 +46,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.dashboard),
+        title: Text(AppStrings.dashboard),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => Navigator.pushNamed(context, '/settings'),
+          ),
           Consumer<NotificationProvider>(
             builder: (context, notif, _) {
               return Stack(

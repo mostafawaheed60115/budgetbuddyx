@@ -55,14 +55,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.notifications),
+        title: Text(AppStrings.notifications),
         actions: [
           Consumer<NotificationProvider>(
             builder: (context, provider, _) {
               if (provider.unreadCount > 0) {
                 return TextButton(
                   onPressed: provider.markAllAsRead,
-                  child: const Text(AppStrings.markAllAsRead),
+                  child: Text(AppStrings.markAllAsRead),
                 );
               }
               return const SizedBox.shrink();

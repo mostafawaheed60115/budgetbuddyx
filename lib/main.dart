@@ -13,6 +13,7 @@ import 'providers/expense_provider.dart';
 import 'providers/budget_provider.dart';
 import 'providers/savings_provider.dart';
 import 'providers/notification_provider.dart';
+import 'providers/language_provider.dart';
 import 'app.dart';
 
 void main() {
@@ -22,6 +23,9 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => LanguageProvider(),
+        ),
         ChangeNotifierProvider(
           create: (_) => AuthProvider(AuthService(apiClient), apiClient),
         ),

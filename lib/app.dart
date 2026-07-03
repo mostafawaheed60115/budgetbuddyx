@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'providers/language_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_strings.dart';
 import 'screens/splash/splash_screen.dart';
@@ -14,6 +17,7 @@ import 'screens/budgets/budget_form_screen.dart';
 import 'screens/savings/savings_list_screen.dart';
 import 'screens/savings/savings_form_screen.dart';
 import 'screens/notifications/notifications_screen.dart';
+import 'screens/settings/settings_screen.dart';
 import 'screens/widgets/bottom_nav_bar.dart';
 
 class BudgetBuddyApp extends StatelessWidget {
@@ -21,11 +25,23 @@ class BudgetBuddyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return MaterialApp(
       title: AppStrings.appName,
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
+      locale: languageProvider.locale,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('ar', ''),
+      ],
       routes: {
         '/login': (_) => const LoginScreen(),
         '/signup': (_) => const SignupScreen(),
@@ -35,6 +51,7 @@ class BudgetBuddyApp extends StatelessWidget {
         '/budget/form': (_) => const BudgetFormScreen(),
         '/savings/form': (_) => const SavingsFormScreen(),
         '/notifications': (_) => const NotificationsScreen(),
+        '/settings': (_) => const SettingsScreen(),
       },
     );
   }

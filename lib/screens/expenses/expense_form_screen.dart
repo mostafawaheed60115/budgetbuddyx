@@ -111,7 +111,7 @@ class _ExpenseFormScreenState extends State<ExpenseFormScreen> {
             children: [
               DropdownButtonFormField<String>(
                 initialValue: _selectedCategory,
-                decoration: const InputDecoration(labelText: AppStrings.category),
+                decoration: InputDecoration(labelText: AppStrings.category),
                 items: _categories
                     .map((c) => DropdownMenuItem(value: c, child: Text(c)))
                     .toList(),
@@ -145,7 +145,7 @@ class _ExpenseFormScreenState extends State<ExpenseFormScreen> {
                 maxLines: 3,
               ),
               SwitchListTile(
-                title: const Text(AppStrings.isRecurring),
+                title: Text(AppStrings.isRecurring),
                 value: _isRecurring,
                 activeThumbColor: AppColors.primary,
                 onChanged: (v) => setState(() => _isRecurring = v),

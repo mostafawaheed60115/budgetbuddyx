@@ -36,6 +36,7 @@ class ApiClient {
     };
     if (_token != null) {
       headers['Cookie'] = 'access_token=$_token';
+      headers['Authorization'] = 'Bearer $_token';
     }
     return headers;
   }
@@ -46,7 +47,17 @@ class ApiClient {
       final match = RegExp(r'access_token=([^;]+)').firstMatch(setCookie);
       if (match != null) {
         saveToken(match.group(1)!);
+        return;
       }
+    }
+
+    try {
+      final decoded = jsonDecode(response.body);
+      if (decoded is Map && decoded.containsKey('access_token')) {
+        saveToken(decoded['access_token'] as String);
+      }
+    } catch (_) {
+      // Ignore
     }
   }
 

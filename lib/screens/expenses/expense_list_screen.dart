@@ -26,7 +26,7 @@ class _ExpenseListScreenState extends State<ExpenseListScreen> {
     final currencyFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.expenses)),
+      appBar: AppBar(title: Text(AppStrings.expenses)),
       body: Consumer<ExpenseProvider>(
         builder: (context, provider, _) {
           if (provider.isLoading && provider.expenses.isEmpty) {
@@ -57,8 +57,8 @@ class _ExpenseListScreenState extends State<ExpenseListScreen> {
                               title: const Text('Delete Expense'),
                               content: const Text('Are you sure?'),
                               actions: [
-                                TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text(AppStrings.cancel)),
-                                TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text(AppStrings.delete, style: TextStyle(color: AppColors.danger))),
+                                TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppStrings.cancel)),
+                                TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(AppStrings.delete, style: const TextStyle(color: AppColors.danger))),
                               ],
                             ),
                           );
