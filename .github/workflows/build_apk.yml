@@ -5,7 +5,10 @@ on:
     branches:
       - main
       - master
-  workflow_dispatch: # Allows you to manually trigger the build from the Actions tab on GitHub
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -29,27 +32,22 @@ jobs:
       - name: Install dependencies
         run: |
           flutter pub get > pub_get.log 2>&1 || {
-            echo "### Dependency Installation Failed ❌" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cat pub_get.log >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add pub_get.log
+            git commit -m "ci: save pub get error log [skip ci]" || true
+            git push origin main || true
             exit 1
           }
-
-      - name: Upload pub get log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: pub-get-log
-          path: pub_get.log
 
       - name: Build APK
         run: |
           flutter build apk --release > build_apk.log 2>&1 || {
-            echo "### Build APK Failed ❌" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cat build_apk.log >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add build_apk.log
+            git commit -m "ci: save build apk error log [skip ci]" || true
+            git push origin main || true
             exit 1
           }
 
