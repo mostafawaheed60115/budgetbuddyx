@@ -36,6 +36,13 @@ jobs:
             exit 1
           }
 
+      - name: Upload pub get log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pub-get-log
+          path: pub_get.log
+
       - name: Build APK
         run: |
           flutter build apk --release > build_apk.log 2>&1 || {
