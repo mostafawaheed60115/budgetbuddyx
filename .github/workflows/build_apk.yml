@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -31,12 +34,14 @@ jobs:
 
       - name: Install dependencies
         run: |
+          # Try removing pubspec.lock to resolve version conflicts with the runner's Flutter SDK
+          rm -f pubspec.lock
           flutter pub get > pub_get.log 2>&1 || {
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add pub_get.log
             git commit -m "ci: save pub get error log [skip ci]" || true
-            git push origin main || true
+            git push origin HEAD:main || true
             exit 1
           }
 
@@ -47,7 +52,7 @@ jobs:
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add build_apk.log
             git commit -m "ci: save build apk error log [skip ci]" || true
-            git push origin main || true
+            git push origin HEAD:main || true
             exit 1
           }
 
