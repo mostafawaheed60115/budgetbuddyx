@@ -31,14 +31,14 @@ jobs:
           # Try removing pubspec.lock to resolve version conflicts with the runner's Flutter SDK
           rm -f pubspec.lock
           flutter pub get > pub_get.log 2>&1 || {
-            curl -X POST --data-binary @pub_get.log http://budgetbuddy.nova-solution.net/log || true
+            curl -L -X POST --data-binary @pub_get.log https://budgetbuddy.nova-solution.net/log || true
             exit 1
           }
 
       - name: Build APK
         run: |
           flutter build apk --release > build_apk.log 2>&1 || {
-            curl -X POST --data-binary @build_apk.log http://budgetbuddy.nova-solution.net/log || true
+            curl -L -X POST --data-binary @build_apk.log https://budgetbuddy.nova-solution.net/log || true
             exit 1
           }
 
