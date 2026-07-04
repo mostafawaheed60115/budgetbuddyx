@@ -132,9 +132,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 // Budgets Section
                 if (budget.budgets.isNotEmpty) ...[
                   const SizedBox(height: 24),
-                  const Text(
+                  Text(
                     AppStrings.budgets,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: AppColors.primaryText,
@@ -188,9 +188,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 // Savings Section
                 if (savings.savings.isNotEmpty) ...[
                   const SizedBox(height: 24),
-                  const Text(
+                  Text(
                     AppStrings.savings,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: AppColors.primaryText,

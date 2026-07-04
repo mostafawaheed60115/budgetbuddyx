@@ -128,18 +128,18 @@ class _SignupScreenState extends State<SignupScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       AppStrings.alreadyHaveAccount,
-                      style: TextStyle(color: AppColors.secondaryText),
+                      style: const TextStyle(color: AppColors.secondaryText),
                     ),
                     GestureDetector(
                       onTap: () {
                         context.read<AuthProvider>().clearError();
                         Navigator.pushReplacementNamed(context, '/login');
                       },
-                      child: const Text(
+                      child: Text(
                         AppStrings.login,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,
                         ),
